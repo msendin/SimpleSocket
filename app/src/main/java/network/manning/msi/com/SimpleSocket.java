@@ -51,6 +51,7 @@ public class SimpleSocket extends Activity {
         this.socketInput = (EditText) findViewById(R.id.socket_input);
         this.socketOutput = (TextView) findViewById(R.id.socket_output);
         socketButton = (Button) findViewById(R.id.socket_button);
+        socketOutput.setText("");
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.
                 Builder().permitNetwork().build());
@@ -58,13 +59,11 @@ public class SimpleSocket extends Activity {
         socketButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(final View v) {
-                socketOutput.setText("");
                 try {
                     //InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
                     InetAddress serverAddr = InetAddress.getByName(ipAddress.getText().toString());
-                    //String output = callSocket(serverAddr, port.getText().toString(), socketInput.getText().toString());
                     String output = callSocket(serverAddr, port.getText().toString(), socketInput.getText().toString());
-                    socketOutput.setText(output);
+                    socketOutput.append(output);
                 } catch (java.net.UnknownHostException e1) {
                     e1.printStackTrace();
                 }
@@ -84,8 +83,7 @@ public class SimpleSocket extends Activity {
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             // send input terminated with \n
-            String input = socketData;
-            writer.write(input + "\n", 0, input.length() + 1);
+            writer.write(socketData + "\n", 0, socketData.length() + 1);
             writer.flush();
             // read back output
             output = reader.readLine();
