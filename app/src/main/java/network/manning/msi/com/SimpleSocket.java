@@ -53,8 +53,7 @@ public class SimpleSocket extends Activity {
         socketButton = (Button) findViewById(R.id.socket_button);
         socketOutput.setText("");
 
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.
-                Builder().permitNetwork().build());
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitNetwork().build());
 
         socketButton.setOnClickListener(new OnClickListener() {
 
